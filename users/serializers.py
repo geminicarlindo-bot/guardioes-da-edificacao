@@ -19,10 +19,12 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
+
         # Adiciona informações customizadas ao token
         token['username'] = user.username
         token['role'] = user.role
-        # ADICIONE OS DADOS DO PERFIL
         token['xp'] = user.profile.xp
         token['level'] = user.profile.level
+        token['moedas'] = user.profile.moedas # ADICIONE ESTA LINHA
+
         return token

@@ -30,6 +30,16 @@ class CourseViewSet(viewsets.ModelViewSet):
         # Associa o curso ao professor que o criou
         serializer.save(professor=self.request.user)
 
+class ModuleViewSet(viewsets.ModelViewSet):
+    queryset = Module.objects.all()
+    serializer_class = ModuleSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        course = serializer.validated_data['course']
+        if course.professor != self.request.user:
+            raise permissions.PermissionDenied("Você não tem permissão para adicionar módulos neste curso.")
+        serializer.save()
 class ActivityViewSet(viewsets.ModelViewSet):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer

@@ -16,11 +16,12 @@ function StudentCoursePage() {
                 activity_id: activityId
             });
             alert(response.data.message);
-            // Atualiza o perfil no contexto global para refletir o novo XP/Nível
+            // Atualiza o perfil no contexto global para refletir os novos dados
             setProfile(prevProfile => ({
                 ...prevProfile,
                 xp: response.data.new_xp,
                 level: response.data.new_level,
+                moedas: response.data.new_moedas, // ADICIONE ESTA LINHA
             }));
         } catch (error) {
             console.error("Erro ao completar atividade", error);

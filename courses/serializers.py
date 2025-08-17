@@ -6,15 +6,15 @@ from .models import Course, Module, Activity # Adicione Activity
 class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
-        fields = ['id', 'title', 'description', 'activity_type', 'order']
+        fields = ['id', 'title', 'description', 'activity_type', 'order', 'module']
 
-# ATUALIZE O MODULESERIALIZER
 class ModuleSerializer(serializers.ModelSerializer):
-    activities = ActivitySerializer(many=True, read_only=True) # Adicione esta linha
+    activities = ActivitySerializer(many=True, read_only=True)
 
     class Meta:
         model = Module
-        fields = ['id', 'title', 'order', 'activities'] # Adicione 'activities'
+        fields = ['id', 'title', 'order', 'activities', 'course'] # Adicione 'course'
+
 
 class CourseSerializer(serializers.ModelSerializer):
     modules = ModuleSerializer(many=True, read_only=True)

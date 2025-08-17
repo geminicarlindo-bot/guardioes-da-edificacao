@@ -24,6 +24,7 @@ class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     xp = models.IntegerField(default=0)
     level = models.IntegerField(default=1)
+    moedas = models.IntegerField(default=10) # ADICIONE ESTA LINHA
 
     def __str__(self):
         return self.user.username
