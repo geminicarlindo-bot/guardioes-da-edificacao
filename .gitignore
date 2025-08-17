@@ -1,0 +1,25 @@
+# Arquivos de Ambiente Virtual do Python
+venv/
+/venv/
+__pycache__/
+*.pyc
+
+# Banco de Dados
+db.sqlite3
+*.sqlite3
+
+# Arquivos de Dependências do Node.js
+/node_modules
+/frontend/node_modules
+npm-debug.log
+yarn-error.log
+
+# Arquivos de Build do Frontend
+/frontend/build
+
+# Arquivos do Editor VS Code
+.vscode/
+
+# Arquivos de Sistema Operacional
+.DS_Store
+Thumbs.db
