@@ -8,7 +8,7 @@ function StudentCoursePage() {
     const { courseId } = useParams();
     const [course, setCourse] = useState(null);
     const [loading, setLoading] = useState(true);
-    const { setProfile } = useAuth();
+    const { setUser } = useAuth(); // TROQUE 'setProfile' por 'setUser'
 
     const handleCompleteActivity = async (activityId) => {
         try {
@@ -16,12 +16,12 @@ function StudentCoursePage() {
                 activity_id: activityId
             });
             alert(response.data.message);
-            // Atualiza o perfil no contexto global para refletir os novos dados
-            setProfile(prevProfile => ({
-                ...prevProfile,
+            // ATUALIZE a chamada para setUser
+            setUser(prevUser => ({
+                ...prevUser,
                 xp: response.data.new_xp,
                 level: response.data.new_level,
-                moedas: response.data.new_moedas, // ADICIONE ESTA LINHA
+                moedas: response.data.new_moedas,
             }));
         } catch (error) {
             console.error("Erro ao completar atividade", error);

@@ -1,6 +1,5 @@
 # store/models.py
 from django.db import models
-from users.models import Profile
 
 class StoreItem(models.Model):
     ITEM_TYPE_CHOICES = (
@@ -13,12 +12,13 @@ class StoreItem(models.Model):
     price = models.PositiveIntegerField()
     item_type = models.CharField(max_length=20, choices=ITEM_TYPE_CHOICES)
     # image = models.ImageField(upload_to='store_items/') # Para o futuro
+    asset_url = models.CharField(max_length=200, blank=True, help_text="Ex: capacete_azul.png")
 
     def __str__(self):
         return self.name
 
 class ProfileInventory(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='inventory')
+    profile = models.ForeignKey('users.Profile', on_delete=models.CASCADE, related_name='inventory')
     item = models.ForeignKey(StoreItem, on_delete=models.CASCADE)
     purchased_at = models.DateTimeField(auto_now_add=True)
 

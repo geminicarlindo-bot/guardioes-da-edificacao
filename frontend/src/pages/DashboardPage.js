@@ -32,16 +32,16 @@ function DashboardPage() {
             <h2>Dashboard</h2>
             <h3>Bem-vindo, {user?.username}! (Perfil: {user?.role})</h3>
 
-            {user?.role === 'aluno' && profile && (
+            {user?.role === 'aluno' && (
                 <div style={{ margin: '20px 0', border: '1px solid green', padding: '15px', borderRadius: '5px' }}>
                     <h4>Seu Progresso</h4>
-                    <p>Nível: {profile.level}</p>
-                    <p>XP: {profile.xp} / {profile.level * 500}</p>
-                    {/* A LINHA DAS MOEDAS ESTÁ AQUI */}
-                    <p>🪙 Moedas de Reparo: {profile.moedas}</p>
+                    {/* TROQUE 'profile' POR 'user' AQUI */}
+                    <p>Nível: {user?.level}</p>
+                    <p>XP: {user?.xp} / {user?.level * 500}</p>
+                    <p>🪙 Moedas de Reparo: {user?.moedas}</p> 
                     <div style={{ border: '1px solid #ccc', width: '100%', backgroundColor: '#e0e0e0', borderRadius: '5px', overflow: 'hidden' }}>
                         <div style={{ 
-                            width: `${(profile.xp / (profile.level * 500)) * 100}%`, 
+                            width: `${(user?.xp / (user.level * 500)) * 100}%`, 
                             height: '20px', 
                             backgroundColor: 'green' 
                         }}></div>

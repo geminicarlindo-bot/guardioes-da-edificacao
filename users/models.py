@@ -24,7 +24,12 @@ class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     xp = models.IntegerField(default=0)
     level = models.IntegerField(default=1)
-    moedas = models.IntegerField(default=10) # ADICIONE ESTA LINHA
+    moedas = models.IntegerField(default=10)
+
+    # ADICIONE OS CAMPOS ABAIXO
+    equipped_capacete = models.ForeignKey('store.StoreItem', on_delete=models.SET_NULL, null=True, blank=True, related_name='+')
+    equipped_luva = models.ForeignKey('store.StoreItem', on_delete=models.SET_NULL, null=True, blank=True, related_name='+')
+    equipped_ferramenta = models.ForeignKey('store.StoreItem', on_delete=models.SET_NULL, null=True, blank=True, related_name='+')
 
     def __str__(self):
         return self.user.username

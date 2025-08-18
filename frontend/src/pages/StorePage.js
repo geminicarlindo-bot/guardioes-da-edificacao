@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 function StorePage() {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { profile, setProfile } = useAuth(); // Usaremos para atualizar as moedas
+    const { user, setUser } = useAuth(); // TROQUE 'profile' e 'setProfile' por 'user' e 'setUser'
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -26,8 +26,8 @@ function StorePage() {
         try {
             const response = await axiosInstance.post('/store/purchase/', { item_id: itemId });
             alert(response.data.message);
-            // Atualiza o saldo de moedas no contexto global
-            setProfile(prev => ({ ...prev, moedas: response.data.new_moedas }));
+            // ATUALIZE a chamada para setUser
+            setUser(prevUser => ({ ...prevUser, moedas: response.data.new_moedas }));
         } catch (error) {
             alert(error.response?.data?.error || "Falha na compra.");
         }
@@ -38,14 +38,26 @@ function StorePage() {
     return (
         <div>
             <h2>🛒 Loja do Mestre de Obras</h2>
-            <p>Seu saldo: 🪙 {profile?.moedas} Moedas de Reparo</p>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {/* A interrogação aqui protege contra o erro */}
+            <p>Seu saldo: 🪙 {user?.moedas} Moedas de Reparo</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
                 {items.map(item => (
-                    <div key={item.id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px', width: '200px' }}>
-                        <h4>{item.name}</h4>
-                        <p>{item.description}</p>
-                        <p><strong>Preço: 🪙 {item.price}</strong></p>
-                        <button onClick={() => handlePurchase(item.id)}>Comprar</button>
+                    <div key={item.id} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '15px', width: '200px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <div>
+                            <div style={{ height: '150px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <img 
+                                    src={`/assets/${item.asset_url}`} 
+                                    alt={item.name} 
+                                    style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} 
+                                />
+                            </div>
+                            <h4>{item.name}</h4>
+                            <p style={{ fontSize: '0.9em', color: '#555' }}>{item.description}</p>
+                        </div>
+                        <div>
+                            <p><strong>Preço: 🪙 {item.price}</strong></p>
+                            <button onClick={() => handlePurchase(item.id)} style={{ width: '100%', padding: '8px', cursor: 'pointer' }}>Comprar</button>
+                        </div>
                     </div>
                 ))}
             </div>

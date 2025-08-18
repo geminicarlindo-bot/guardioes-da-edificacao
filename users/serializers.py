@@ -1,7 +1,8 @@
 # users/serializers.py
 from rest_framework import serializers
-from .models import CustomUser
+from .models import CustomUser, Profile
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from store.models import StoreItem, ProfileInventory # Importe os modelos da loja
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -28,3 +29,25 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['moedas'] = user.profile.moedas # ADICIONE ESTA LINHA
 
         return token
+
+class EquippedItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StoreItem
+        fields = ['id', 'name', 'asset_url', 'item_type']
+
+class InventoryItemSerializer(serializers.ModelSerializer):
+    item = EquippedItemSerializer(read_only=True)
+    class Meta:
+        model = ProfileInventory
+        fields = ['item']
+
+class ProfileSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    inventory = InventoryItemSerializer(many=True, read_only=True)
+    equipped_capacete = EquippedItemSerializer(read_only=True)
+    equipped_luva = EquippedItemSerializer(read_only=True)
+    equipped_ferramenta = EquippedItemSerializer(read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = '__all__'
